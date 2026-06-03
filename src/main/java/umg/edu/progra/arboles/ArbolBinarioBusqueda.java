@@ -61,7 +61,7 @@ public class ArbolBinarioBusqueda {
         return actual;
     }
 
-    /**
+     /**
      * Busca un valor dentro del arbol. Devuelve el Nodo si existe
      * o null si no se encuentra.
      */
@@ -419,7 +419,7 @@ public class ArbolBinarioBusqueda {
     	        // Uno a cada lado (o uno es igual al actual) => este es el LCA
     	        return nodo.dato;
     	    }
-    	             // ============================================================
+    	            // ============================================================
     	    	    // PROBLEMA 5 — invertir (espejo)
     	    	    // ============================================================
 
@@ -443,7 +443,115 @@ public class ArbolBinarioBusqueda {
     	    	        invertirRecursivo(nodo.izquierdo);
     	    	        invertirRecursivo(nodo.derecho);
     	    	    }
+    	    	    // ============================================================
+    	    	    // EXTRA E1 — kEsimoMenor
+    	    	    // ============================================================
 
+    	    	    /**
+    	    	     * Devuelve el k-esimo valor mas pequeno del arbol (1-indexado).
+    	    	     * Usa un recorrido InOrden con un contador implementado con arreglo
+    	    	     * de un elemento (truco para pasar el estado por referencia sin java.util).
+    	    	     * Lanza IllegalArgumentException si k es invalido.
+    	    	     */
+    	    	    public int kEsimoMenor(int k) {
+    	    	        if (k < 1 || k > tamanio) {
+    	    	            throw new IllegalArgumentException("k=" + k + " fuera de rango [1," + tamanio + "]");
+    	    	        }
+    	    	        int[] contador = { 0 };
+    	    	        int[] resultado = { Integer.MIN_VALUE };
+    	    	        kEsimoMenorRecursivo(raiz, k, contador, resultado);
+    	    	        return resultado[0];
+    	    	    }
+
+    	    	    private void kEsimoMenorRecursivo(Nodo nodo, int k, int[] contador, int[] resultado) {
+    	    	        if (nodo == null || contador[0] >= k) {
+    	    	            return;
+    	    	        }
+    	    	        kEsimoMenorRecursivo(nodo.izquierdo, k, contador, resultado);
+    	    	        contador[0]++;
+    	    	        if (contador[0] == k) {
+    	    	            resultado[0] = nodo.dato;
+    	    	            return;
+    	    	        }
+    	    	        kEsimoMenorRecursivo(nodo.derecho, k, contador, resultado);
+    	    	    }
+    	    	    
+    	    	    // ============================================================
+    	    	    // EXTRA E2 — imprimirRangoOrdenado
+    	    	    // ============================================================
+
+    	    	    /**
+    	    	     * Imprime en orden todos los valores del arbol en el rango [min, max],
+    	    	     * recorriendo lo menos posible (poda de subarboles fuera del rango).
+    	    	     */
+    	    	    public void imprimirRangoOrdenado(int min, int max) {
+    	    	        imprimirRangoRecursivo(raiz, min, max);
+    	    	        System.out.println();
+    	    	    }
+
+    	    	    private void imprimirRangoRecursivo(Nodo nodo, int min, int max) {
+    	    	        if (nodo == null) {
+    	    	            return;
+    	    	        }
+    	    	        // Poda izquierda: solo explorar si puede haber valores >= min
+    	    	        if (nodo.dato > min) {
+    	    	            imprimirRangoRecursivo(nodo.izquierdo, min, max);
+    	    	        }
+    	    	        // Imprimir si esta en rango
+    	    	        if (nodo.dato >= min && nodo.dato <= max) {
+    	    	            System.out.print(nodo.dato + " ");
+    	    	        }
+    	    	        // Poda derecha: solo explorar si puede haber valores <= max
+    	    	        if (nodo.dato < max) {
+    	    	            imprimirRangoRecursivo(nodo.derecho, min, max);
+    	    	        }
+    	    	    }
+    	    	    // ============================================================
+    	    	    // EXTRA E3 — diametro
+    	    	    // ============================================================
+
+    	    	    /**
+    	    	    * Devuelve el diametro del arbol: el numero de aristas en el camino
+    	    	    * mas largo entre dos nodos cualesquiera.
+    	    	    * El camino puede o no pasar por la raiz.
+    	    	    * Estrategia: para cada nodo el diametro maximo que pasa por el es
+    	    	    * alturaIzq + alturaDer + 2. Se elige el maximo global.
+    	    	    */
+    	    	    public int diametro() {
+    	    	    	    int[] maxDiametro = { 0 };
+    	    	    	    diametroRecursivo(raiz, maxDiametro);
+    	    	    	   return maxDiametro[0];
+    	    	    	  }
+
+    	    	     private int diametroRecursivo(Nodo nodo, int[] maxDiametro) {
+    	    	    	     if (nodo == null) {
+    	    	    	          return -1;
+    	    	    	       }
+    	    	    	     int altIzq = diametroRecursivo(nodo.izquierdo, maxDiametro);
+    	    	    	     int altDer = diametroRecursivo(nodo.derecho, maxDiametro);
+
+    	    	    	     // Diametro que pasa por este nodo: (altIzq+1) aristas hacia izq + (altDer+1) hacia der
+    	    	    	      int diametroLocal = (altIzq + 1) + (altDer + 1);
+    	    	    	      if (diametroLocal > maxDiametro[0]) {
+    	    	    	       maxDiametro[0] = diametroLocal;
+    	    	    	      }
+    	    	    	      return 1 + (altIzq > altDer ? altIzq : altDer);
+    	    	    	    }
+    	    	     // ============================================================
+    	    	     // EXTRA E4 — construir BST desde args (array de ints)
+    	    	     // ============================================================
+
+    	    	     /**
+    	    	      * Construye un BST insertando todos los valores del arreglo recibido.
+    	    	      * Se usa desde Principal pasando args[] convertido a int[].
+    	    	      */
+    	    	     public static ArbolBinarioBusqueda desdearreglo(int[] valores) {
+    	    	         ArbolBinarioBusqueda arbol = new ArbolBinarioBusqueda();
+    	    	         for (int v : valores) {
+    	    	             arbol.insertar(v);
+    	    	         }
+    	    	         return arbol;
+    	    	     }
    
     // ============================================================
     // COLA INTERNA (lista enlazada simple) usada para BFS.

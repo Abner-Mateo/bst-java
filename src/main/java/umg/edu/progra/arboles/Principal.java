@@ -167,6 +167,7 @@ public class Principal {
                 } catch (IllegalArgumentException e) {
                     System.out.println("lca(10,999) -> Excepcion correcta: " + e.getMessage());
                 }
+                
                 // ============================================================
                 // PROBLEMA 5 — invertir (espejo)
                 // ============================================================
@@ -186,9 +187,104 @@ public class Principal {
 
                 // Volver a invertir para dejarlo normal
                 arbol.invertir();
+                
+                // ============================================================
+                // EXTRA E1 — kEsimoMenor
+                // ============================================================
+                System.out.println("\n========================================");
+                System.out.println("EXTRA E1 — kEsimoMenor");
+                System.out.println("========================================");
+                System.out.print("InOrden: ");
+                arbol.inOrden();
+                System.out.println("1er menor  (esperado 10): " + arbol.kEsimoMenor(1));
+                System.out.println("3er menor  (esperado 30): " + arbol.kEsimoMenor(3));
+                System.out.println("5to menor  (esperado 50): " + arbol.kEsimoMenor(5));
+                System.out.println("8vo menor  (esperado 80): " + arbol.kEsimoMenor(8));
+                try {
+                    arbol.kEsimoMenor(0);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("kEsimoMenor(0) -> Excepcion: " + e.getMessage());
+                }
+                
+                // ============================================================
+                // EXTRA E2 — imprimirRangoOrdenado
+                // ============================================================
+                System.out.println("\n========================================");
+                System.out.println("EXTRA E2 — imprimirRangoOrdenado");
+                System.out.println("========================================");
+                System.out.print("Rango [20,60] (esperado 20 30 40 50 60): ");
+                arbol.imprimirRangoOrdenado(20, 60);
+                System.out.print("Rango [10,10] (esperado 10):             ");
+                arbol.imprimirRangoOrdenado(10, 10);
+                System.out.print("Rango [1,100] (todos):                   ");
+                arbol.imprimirRangoOrdenado(1, 100);
+                
+                // ============================================================
+                // EXTRA E3 — diametro
+                // ============================================================
+                System.out.println("\n========================================");
+                System.out.println("EXTRA E3 — diametro");
+                System.out.println("========================================");
+                System.out.println("Arbol original:");
+                arbol.imprimirArbol();
+                System.out.println("Diametro (esperado 6, camino 10->20->30->50->70->60 o similar): "
+                                   + arbol.diametro());
 
+                // Arbol pequeno para validar
+                ArbolBinarioBusqueda arbolSimple = new ArbolBinarioBusqueda();
+                arbolSimple.insertar(1);
+                arbolSimple.insertar(2);
+                arbolSimple.insertar(3);
+                System.out.println("Arbol lineal 1->2->3, diametro esperado=2: " + arbolSimple.diametro());
+                
+
+                // ============================================================
+                // EXTRA E4 — BST desde argumentos de consola
+                // ============================================================
+                System.out.println("\n========================================");
+                System.out.println("EXTRA E4 — BST desde argumentos de consola");
+                System.out.println("========================================");
+                if (args.length > 0) {
+                    int[] desdeConsola = new int[args.length];
+                    boolean todoValidos = true;
+                    for (int i = 0; i < args.length; i++) {
+                        try {
+                            desdeConsola[i] = Integer.parseInt(args[i]);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Argumento invalido: '" + args[i] + "'. Debe ser un entero.");
+                            todoValidos = false;
+                            break;
+                        }
+                    }
+                    if (todoValidos) {
+                        ArbolBinarioBusqueda arbolArgs = ArbolBinarioBusqueda.desdearreglo(desdeConsola);
+                        System.out.println("Valores insertados desde args: ");
+                        for (int v : desdeConsola) System.out.print(v + " ");
+                        System.out.println();
+                        System.out.println("Arbol generado:");
+                        arbolArgs.imprimirArbol();
+                        System.out.print("InOrden (ordenado): ");
+                        arbolArgs.inOrden();
+                        System.out.println("Tamanio: " + arbolArgs.tamanio());
+                        System.out.println("Altura:  " + arbolArgs.altura());
+                        System.out.println("Es BST valido: " + arbolArgs.esBSTValido());
+                        System.out.println("Esta balanceado: " + arbolArgs.esBalanceado());
+                    }
+                } else {
+                    System.out.println("No se pasaron argumentos. Ejecuta con:");
+                    System.out.println("  java -cp target/classes umg.edu.progra.arboles.Principal 15 8 22 4 11 19");
+                    System.out.println("Demostracion con arreglo hardcodeado [15, 8, 22, 4, 11]:");
+                    int[] demo = { 15, 8, 22, 4, 11 };
+                    ArbolBinarioBusqueda arbolDemo = ArbolBinarioBusqueda.desdearreglo(demo);
+                    arbolDemo.imprimirArbol();
+                    System.out.print("InOrden: ");
+                    arbolDemo.inOrden();
+                }
+
+                System.out.println("\n===== FIN DE LA DEMOSTRACION =====");
+            }
     }
-}
+
 
                     
                 
