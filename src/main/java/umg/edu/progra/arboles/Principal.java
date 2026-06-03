@@ -125,6 +125,31 @@ public class Principal {
                 }
                 System.out.println("\nArbol degenerado (1,2,3,4,5 en orden):");
                 arbolDesequilibrado.imprimirArbol();
-                System.out.println("esBalanceado() = " + arbolDesequilibrado.esBalanceado()); // false
-    }
+
+                
+                
+                // ============================================================
+                // PROBLEMA 3 — esBSTValido
+                // ============================================================
+                System.out.println("\n========================================");
+                System.out.println("PROBLEMA 3 — esBSTValido");
+                System.out.println("========================================");
+                System.out.println("Arbol original (debe ser valido):");
+                System.out.println("esBSTValido() = " + arbol.esBSTValido()); // true
+
+                // Arbol "roto": modificamos directamente un nodo para violar la propiedad
+                // Creamos un arbol simple y corrompemos un nodo manualmente
+                ArbolBinarioBusqueda arbolRoto = new ArbolBinarioBusqueda();
+                arbolRoto.insertar(10);
+                arbolRoto.insertar(5);
+                arbolRoto.insertar(15);
+                // Corrompemos: el hijo izquierdo (5) lo cambiamos a 12 (viola BST)
+                arbolRoto.getRaiz().izquierdo.dato = 12;
+                System.out.println("\nArbol roto (nodo izq con valor 12 debajo de raiz 10):");
+                arbolRoto.imprimirArbol();
+                System.out.println("esBSTValido() = " + arbolRoto.esBSTValido()); // false
+
+    			}
 }
+    
+

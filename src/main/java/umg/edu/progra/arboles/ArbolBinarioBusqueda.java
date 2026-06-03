@@ -358,6 +358,30 @@ public class ArbolBinarioBusqueda {
         }
         return 1 + (altIzq > altDer ? altIzq : altDer);
     }
+    
+    		// ============================================================
+    	    // PROBLEMA 3 — esBSTValido
+    	    // ============================================================
+
+    	    /**
+    	     * Verifica que el arbol cumple la propiedad de BST:
+    	     * todo el subarbol izquierdo < raiz, todo el derecho > raiz.
+    	     * Usa rango (min, max) para validar cada nodo en un solo recorrido.
+    	     */
+    	    public boolean esBSTValido() {
+    	        return esBSTValidoRecursivo(raiz, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    	    }
+
+    	    private boolean esBSTValidoRecursivo(Nodo nodo, int min, int max) {
+    	        if (nodo == null) {
+    	            return true;
+    	        }
+    	        if (nodo.dato <= min || nodo.dato >= max) {
+    	            return false;
+    	        }
+    	        return esBSTValidoRecursivo(nodo.izquierdo, min, nodo.dato)
+    	            && esBSTValidoRecursivo(nodo.derecho, nodo.dato, max);
+    	    }
     // ============================================================
     // COLA INTERNA (lista enlazada simple) usada para BFS.
     // Se implementa aqui para NO depender de java.util.
