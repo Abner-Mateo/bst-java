@@ -419,7 +419,32 @@ public class ArbolBinarioBusqueda {
     	        // Uno a cada lado (o uno es igual al actual) => este es el LCA
     	        return nodo.dato;
     	    }
+    	             // ============================================================
+    	    	    // PROBLEMA 5 — invertir (espejo)
+    	    	    // ============================================================
 
+    	    	    /**
+    	    	     * Invierte el arbol: intercambia izquierdo y derecho en todos los nodos.
+    	    	     * Despues de invertir, inOrden imprimira los valores en orden DESCENDENTE.
+    	    	     */
+    	    	    public void invertir() {
+    	    	        invertirRecursivo(raiz);
+    	    	    }
+
+    	    	    private void invertirRecursivo(Nodo nodo) {
+    	    	        if (nodo == null) {
+    	    	            return;
+    	    	        }
+    	    	        // Intercambiar hijos
+    	    	        Nodo temp = nodo.izquierdo;
+    	    	        nodo.izquierdo = nodo.derecho;
+    	    	        nodo.derecho = temp;
+    	    	        // Invertir recursivamente ambos subarboles
+    	    	        invertirRecursivo(nodo.izquierdo);
+    	    	        invertirRecursivo(nodo.derecho);
+    	    	    }
+
+   
     // ============================================================
     // COLA INTERNA (lista enlazada simple) usada para BFS.
     // Se implementa aqui para NO depender de java.util.

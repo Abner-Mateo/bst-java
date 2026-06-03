@@ -167,8 +167,29 @@ public class Principal {
                 } catch (IllegalArgumentException e) {
                     System.out.println("lca(10,999) -> Excepcion correcta: " + e.getMessage());
                 }
-                
-    			}
+                // ============================================================
+                // PROBLEMA 5 — invertir (espejo)
+                // ============================================================
+                System.out.println("\n========================================");
+                System.out.println("PROBLEMA 5 — invertir (espejo)");
+                System.out.println("========================================");
+                System.out.println("ANTES de invertir:");
+                arbol.imprimirArbol();
+                System.out.print("InOrden (debe ser ascendente): ");
+                arbol.inOrden();
+
+                arbol.invertir();
+                System.out.println("\nDESPUES de invertir:");
+                arbol.imprimirArbol();
+                System.out.print("InOrden (ahora descendente):   ");
+                arbol.inOrden();
+
+                // Volver a invertir para dejarlo normal
+                arbol.invertir();
+
+    }
 }
-    
+
+                    
+                
 
