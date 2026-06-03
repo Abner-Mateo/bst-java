@@ -357,7 +357,7 @@ public class ArbolBinarioBusqueda {
             return -2; // este nodo ya no esta balanceado
         }
         return 1 + (altIzq > altDer ? altIzq : altDer);
-    }
+    	}
     
     		// ============================================================
     	    // PROBLEMA 3 — esBSTValido
@@ -382,6 +382,44 @@ public class ArbolBinarioBusqueda {
     	        return esBSTValidoRecursivo(nodo.izquierdo, min, nodo.dato)
     	            && esBSTValidoRecursivo(nodo.derecho, nodo.dato, max);
     	    }
+    	    
+    	    // ============================================================
+    	    // PROBLEMA 4 — ancestroComunMasBajo (LCA)
+    	    // ============================================================
+
+    	    /**
+    	     * Devuelve el dato del nodo que es el Ancestro Comun mas Bajo (LCA)
+    	     * de los valores 'a' y 'b'.
+    	     * Aprovecha la propiedad del BST:
+    	     *  - Si ambos < actual -> LCA en subarbol izquierdo.
+    	     *  - Si ambos > actual -> LCA en subarbol derecho.
+    	     *  - Si uno es <= y otro es >= -> actual es el LCA.
+    	     * Lanza IllegalArgumentException si alguno no existe en el arbol.
+    	     */
+    	    public int ancestroComunMasBajo(int a, int b) {
+    	        if (!contiene(a)) {
+    	            throw new IllegalArgumentException("El valor " + a + " no existe en el arbol.");
+    	        }
+    	        if (!contiene(b)) {
+    	            throw new IllegalArgumentException("El valor " + b + " no existe en el arbol.");
+    	        }
+    	        return lcaRecursivo(raiz, a, b);
+    	    }
+
+    	    private int lcaRecursivo(Nodo nodo, int a, int b) {
+    	        if (nodo == null) {
+    	            throw new IllegalStateException("No se encontro el LCA (arbol invalido).");
+    	        }
+    	        if (a < nodo.dato && b < nodo.dato) {
+    	            return lcaRecursivo(nodo.izquierdo, a, b);
+    	        }
+    	        if (a > nodo.dato && b > nodo.dato) {
+    	            return lcaRecursivo(nodo.derecho, a, b);
+    	        }
+    	        // Uno a cada lado (o uno es igual al actual) => este es el LCA
+    	        return nodo.dato;
+    	    }
+
     // ============================================================
     // COLA INTERNA (lista enlazada simple) usada para BFS.
     // Se implementa aqui para NO depender de java.util.

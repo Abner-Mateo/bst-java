@@ -148,7 +148,26 @@ public class Principal {
                 System.out.println("\nArbol roto (nodo izq con valor 12 debajo de raiz 10):");
                 arbolRoto.imprimirArbol();
                 System.out.println("esBSTValido() = " + arbolRoto.esBSTValido()); // false
-
+                
+                
+                // ============================================================
+                // PROBLEMA 4 — ancestroComunMasBajo (LCA)
+                // ============================================================
+                System.out.println("\n========================================");
+                System.out.println("PROBLEMA 4 — Ancestro Comun mas Bajo (LCA)");
+                System.out.println("========================================");
+                System.out.println("Arbol con nodos: 10 20 30 40 50 60 70 80");
+                System.out.println("lca(10, 40) esperado=30, obtenido=" + arbol.ancestroComunMasBajo(10, 40));
+                System.out.println("lca(10, 80) esperado=50, obtenido=" + arbol.ancestroComunMasBajo(10, 80));
+                System.out.println("lca(60, 80) esperado=70, obtenido=" + arbol.ancestroComunMasBajo(60, 80));
+                System.out.println("lca(20, 20) esperado=20, obtenido=" + arbol.ancestroComunMasBajo(20, 20));
+                // Probar excepcion con valor inexistente
+                try {
+                    arbol.ancestroComunMasBajo(10, 999);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("lca(10,999) -> Excepcion correcta: " + e.getMessage());
+                }
+                
     			}
 }
     
