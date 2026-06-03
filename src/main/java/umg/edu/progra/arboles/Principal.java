@@ -79,19 +79,33 @@ public class Principal {
         arbol.imprimirArbol();
         System.out.println("Tamanio final: " + arbol.tamanio());
         System.out.println("Altura final:  " + arbol.altura());
+        
+        		// ============================================================
+                // Reconstruimos el arbol original para los nuevos problemas
+                // ============================================================
+                arbol = new ArbolBinarioBusqueda();
+                for (int v : valores) {
+                    arbol.insertar(v);
+                }
 
-        /*
-         * Ejercicios
-         *
-         *  1. Implementar un metodo que devuelva la cantidad TOTAL de nodos
-         *     usando recursividad (sin usar el campo 'tamanio').
-         *  2. Implementar un metodo 'esBalanceado()' que indique si el arbol
-         *     esta balanceado (diferencia de alturas <= 1 en cada nodo).
-         *  3. Implementar 'esBSTValido()' que verifique que el arbol cumple
-         *     la propiedad de BST recorriendo los nodos.
-         *  4. Implementar un metodo para encontrar el ancestro comun mas
-         *     bajo (LCA) entre dos valores.
-         *  5. Implementar la inversion del arbol (espejo).
-         */
+                // ============================================================
+                // PROBLEMA 1 — contarNodos recursivo
+                // ============================================================
+                System.out.println("\n========================================");
+                System.out.println("PROBLEMA 1 — contarNodos recursivo");
+                System.out.println("========================================");
+                System.out.println("tamanio()    (campo interno): " + arbol.tamanio());
+                System.out.println("contarNodos() (recursivo):    " + arbol.contarNodos());
+                // Verificar tras insercion
+                arbol.insertar(5);
+                System.out.println("Tras insertar 5:");
+                System.out.println("  tamanio()    = " + arbol.tamanio());
+                System.out.println("  contarNodos()= " + arbol.contarNodos());
+                // Verificar tras eliminacion
+                arbol.eliminar(5);
+                System.out.println("Tras eliminar 5:");
+                System.out.println("  tamanio()    = " + arbol.tamanio());
+                System.out.println("  contarNodos()= " + arbol.contarNodos());
+       
     }
 }

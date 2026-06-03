@@ -301,6 +301,27 @@ public class ArbolBinarioBusqueda {
         System.out.println("-> " + nodo.dato);
         imprimirArbolRecursivo(nodo.izquierdo, nivel + 1);
     }
+    
+    // ============================================================
+    // PROBLEMA 1 — contarNodos recursivo
+    // ============================================================
+
+    /**
+     * Devuelve la cantidad total de nodos del arbol usando recursividad.
+     * NO usa el campo 'tamanio'.
+     * Caso base: nodo null => 0 nodos.
+     * Caso recursivo: 1 (nodo actual) + nodos izquierda + nodos derecha.
+     */
+    public int contarNodos() {
+        return contarNodosRecursivo(raiz);
+    }
+
+    private int contarNodosRecursivo(Nodo nodo) {
+        if (nodo == null) {
+            return 0;
+        }
+        return 1 + contarNodosRecursivo(nodo.izquierdo) + contarNodosRecursivo(nodo.derecho);
+    }
 
     // ============================================================
     // COLA INTERNA (lista enlazada simple) usada para BFS.
