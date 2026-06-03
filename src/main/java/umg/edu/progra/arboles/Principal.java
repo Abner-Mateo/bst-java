@@ -106,6 +106,25 @@ public class Principal {
                 System.out.println("Tras eliminar 5:");
                 System.out.println("  tamanio()    = " + arbol.tamanio());
                 System.out.println("  contarNodos()= " + arbol.contarNodos());
-       
+                
+                // ============================================================
+                // PROBLEMA 2 — esBalanceado
+                // ============================================================
+                System.out.println("\n========================================");
+                System.out.println("PROBLEMA 2 — esBalanceado");
+                System.out.println("========================================");
+                System.out.println("Arbol original (balanceado esperado):");
+                arbol.imprimirArbol();
+                System.out.println("esBalanceado() = " + arbol.esBalanceado()); // true
+
+                // Arbol degenerado (insertando en orden ascendente)
+                ArbolBinarioBusqueda arbolDesequilibrado = new ArbolBinarioBusqueda();
+                int[] ordenAscendente = { 1, 2, 3, 4, 5 };
+                for (int v : ordenAscendente) {
+                    arbolDesequilibrado.insertar(v);
+                }
+                System.out.println("\nArbol degenerado (1,2,3,4,5 en orden):");
+                arbolDesequilibrado.imprimirArbol();
+                System.out.println("esBalanceado() = " + arbolDesequilibrado.esBalanceado()); // false
     }
 }

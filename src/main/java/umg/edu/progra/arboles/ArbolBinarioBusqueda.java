@@ -323,6 +323,41 @@ public class ArbolBinarioBusqueda {
         return 1 + contarNodosRecursivo(nodo.izquierdo) + contarNodosRecursivo(nodo.derecho);
     }
 
+    
+    // ============================================================
+    // PROBLEMA 2 — esBalanceado
+    // ============================================================
+
+    /**
+     * Devuelve true si el arbol esta balanceado: para cada nodo la
+     * diferencia de altura entre subarbol izquierdo y derecho es <= 1.
+     * Estrategia: calcular altura y verificar balance en un solo recorrido
+     * usando -2 como centinela de "no balanceado".
+     */
+    public boolean esBalanceado() {
+        return alturaBalanceada(raiz) != -2;
+    }
+
+    /**
+     * Retorna la altura del subarbol si esta balanceado,
+     * o -2 si en cualquier nodo la diferencia de alturas supera 1.
+     */
+    private int alturaBalanceada(Nodo nodo) {
+        if (nodo == null) {
+            return -1;
+        }
+        int altIzq = alturaBalanceada(nodo.izquierdo);
+        if (altIzq == -2) return -2; // propagar fallo
+
+        int altDer = alturaBalanceada(nodo.derecho);
+        if (altDer == -2) return -2; // propagar fallo
+
+        int diferencia = altIzq - altDer;
+        if (diferencia < -1 || diferencia > 1) {
+            return -2; // este nodo ya no esta balanceado
+        }
+        return 1 + (altIzq > altDer ? altIzq : altDer);
+    }
     // ============================================================
     // COLA INTERNA (lista enlazada simple) usada para BFS.
     // Se implementa aqui para NO depender de java.util.
